@@ -1,26 +1,27 @@
 @extends('layouts.app')
 @section('content')
-<div class="container pt-4" id="app">
+<div class="container" id="app">
   <h2>Registrar cliente</h2>
   <hr>
-  <form action="" method="POST">
+  <form action="{{ route('clients.store') }}" method="POST">
+    @csrf
     <div class="row">
       <div class="col-sm-6">
         <div class="form-group">
           <label for="name">Nombre</label>
-          <input type="text" class="form-control" name="name" autocomplete="off">
+          <input type="text" class="form-control" name="name" autocomplete="off" required>
         </div>
 
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" class="form-control" name="email" id="email" autocomplete="off">
+          <input type="email" class="form-control" name="email" id="email" autocomplete="off" required>
         </div>
 
         <div class="form-group">
           <label for="tel">Teléfono</label>
           <div class="form-row">
             <div class="col-2">
-              <select name="" id="" class="form-control">
+              <select name="country_code" id="countryCode" class="form-control">
                 <option data-countryCode="DZ" value="213">Algeria (+213)</option>
                 <option data-countryCode="AD" value="376">Andorra (+376)</option>
                 <option data-countryCode="AO" value="244">Angola (+244)</option>
@@ -238,7 +239,7 @@
               </select>
             </div>
             <div class="col-10">
-              <input type="tel" class="form-control" name="tel" id="tel" autocomplete="off">
+              <input type="tel" class="form-control" name="phone" id="phone" autocomplete="off">
             </div>
           </div>
         </div>
@@ -252,7 +253,7 @@
         <div class="form-group inline-checks-container">
           @foreach( $payment_methods as $pm )
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="paymentMethodCheckbox{{ $pm->id }}" value="{{ $pm->id }}" name="payment_method_id">
+            <input class="form-check-input" type="radio" id="paymentMethodCheckbox{{ $pm->id }}" value="{{ $pm->id }}" name="payment_method_id" {{ ( $pm->id == 1 ) ? 'checked' : '' }}>
             <label class="form-check-label" for="paymentMethodCheckbox{{ $pm->id }}">{{ $pm->name }}</label>
           </div>
           @endforeach

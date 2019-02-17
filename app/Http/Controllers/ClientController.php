@@ -36,7 +36,7 @@ class ClientController extends Controller
       }
 
       $request->session()->flash('success', 'Store was successful!');
-      return redirect()->route('clients.show', compact($client));
+      return redirect()->route('clients.show/' . $client->id);
     }
 
     public function show(Client $client)

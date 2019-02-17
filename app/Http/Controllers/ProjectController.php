@@ -30,19 +30,19 @@ class ProjectController extends Controller
         'title'                 => $request->title,
         'description'           => $request->description,
         'platform_id'           => $request->platform_id,
-        'development_status_id' => $request->development_status_id
+        'development_status_id' => $request->development_status_id,
       ]);
 
       if( !$project ){
         return back()->withInput();
       }
 
-      return redirect()->route('projects.show', compact($project));
+      return redirect()->route('projects.show', ['project'=>$project->id]);
     }
 
     public function show(Project $project)
     {
-      return view('projects.show', compact($project));
+      return view('projects.show', ['project'=>$project]);
     }
 
     public function edit(Project $project)
