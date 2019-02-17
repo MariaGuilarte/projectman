@@ -12,10 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+  return view('welcome');
 });
 
 Route::resources([
-  'projects' => 'ProjectController',
-  'platforms' => 'PlatformController'
+  'projects'             => 'ProjectController',
+  'development_statuses' => 'DevelopmentStatusController',
+  'clients'              => 'ClientController',
+  'payment_methods'      => 'PaymentMethodController',
+  'platforms'            => 'PlatformController'
 ]);
