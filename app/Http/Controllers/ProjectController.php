@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\DevelopmentStatus;
+use App\Platform;
+use App\Client;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -15,7 +18,10 @@ class ProjectController extends Controller
 
     public function create()
     {
-      return view('projects.create');
+      $dev_statuses = DevelopmentStatus::all();
+      $platforms    = Platform::all();
+      $clients      = Client::all();
+      return view('projects.create', ['dev_statuses' => $dev_statuses, 'platforms'=>$platforms, 'clients'=>$clients]);
     }
 
     public function store(Request $request)
@@ -26,11 +32,11 @@ class ProjectController extends Controller
         'platform_id'           => $request->platform_id,
         'development_status_id' => $request->development_status_id
       ]);
-      
+
       if( !$project ){
         return back()->withInput();
       }
-      
+
       return redirect()->route('projects.show', compact($project));
     }
 
@@ -50,13 +56,13 @@ class ProjectController extends Controller
       $project->description = ( $request->description ) ? $request->description : $project->description;
       $project->platform_id = ( $request->platform_id ) ? $request->platform_id : $project->platform_id;
       $project->development_status_id = ( $request->development_status_id ) ? $request->development_status_id : $project->development_status_id;
-      
+
       if( !$project->save() ){
         return back()->withInput();
       }
-      
+
       $request->session()->flash('success', 'Delete was successful!');
-      return redirect()->route('projects.show', compact($project)); 
+      return redirect()->route('projects.show', compact($project));
     }
 
     public function destroy(Project $project)
@@ -64,7 +70,7 @@ class ProjectController extends Controller
       if( !$project->delete() ){
         $request->session()->flash('fail', 'Delete was failure!');
       }
-      
+
       $request->session()->flash('success', 'Delete was successful!');
       return redirect()->route('projects.index');
     }

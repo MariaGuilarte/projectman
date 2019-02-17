@@ -250,20 +250,12 @@
 
         <label for="payment_method_id" style="font-weight: 500;">Método de pago</label>
         <div class="form-group inline-checks-container">
+          @foreach( $payment_methods as $pm )
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="inlineCheckbox1" value="1" name="payment_method_id">
-            <label class="form-check-label" for="inlineCheckbox1">Paypal</label>
+            <input class="form-check-input" type="radio" id="paymentMethodCheckbox{{ $pm->id }}" value="{{ $pm->id }}" name="payment_method_id">
+            <label class="form-check-label" for="paymentMethodCheckbox{{ $pm->id }}">{{ $pm->name }}</label>
           </div>
-
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="inlineCheckbox2" value="2" name="payment_method_id">
-            <label class="form-check-label" for="inlineCheckbox2">Uphold</label>
-          </div>
-
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="inlineCheckbox3" value="3" name="payment_method_id">
-            <label class="form-check-label" for="inlineCheckbox3">Payoneer</label>
-          </div>
+          @endforeach
         </div>
 
         <div class="form-group">

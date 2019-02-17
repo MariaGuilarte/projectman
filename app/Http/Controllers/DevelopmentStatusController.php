@@ -11,12 +11,12 @@ class DevelopmentStatusController extends Controller
     {
       $dev_statuses = DevelopmentStatus::all();
       return view('development_statuses.index', compact($dev_statuses));
-      // return $dev_statuses;
     }
-    
+
     public function create()
     {
-      return view('developmentStatuses.create');
+      $dev_statuses = DevelopmentStatus::all();
+      return view('developmentStatuses.create', ['dev_statuses'=>$dev_statuses]);
     }
 
     public function store(Request $request)

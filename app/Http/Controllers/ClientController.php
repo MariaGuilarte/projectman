@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\PaymentMethod;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -15,7 +16,8 @@ class ClientController extends Controller
 
     public function create()
     {
-      return view('clients.create');
+      $payment_methods = PaymentMethod::all();
+      return view('clients.create', ['payment_methods'=>$payment_methods]);
     }
 
     public function store(Request $request)
@@ -27,12 +29,12 @@ class ClientController extends Controller
         'skype' => $request->skype,
         'payment_method_id' => $request->payment_method_id
       ]);
-      
+
       if( !$client ){
         $request->session()->flash('fail', 'Store was failure!');
         return back()->withInput();
       }
-      
+
       $request->session()->flash('success', 'Store was successful!');
       return redirect()->route('clients.show', compact($client));
     }
@@ -54,14 +56,14 @@ class ClientController extends Controller
       $client->phone = ( $request->phone ) ? $request->phone : $client->phone;
       $client->skype = ( $request->skype ) ? $request->skype : $client->skype;
       $client->payment_method_id = ( $request->payment_method_id ) ? $request->payment_method_id : $client->payment_method_id;
-      
+
       if( !$client->save() ){
         $request->session()->flash('fail', 'Update was failure!');
         return back()->withInput();
       }
-      
+
       $request->session()->flash('success', 'Update was successful!');
-      return redirect()->route('clients.show', compact($client)); 
+      return redirect()->route('clients.show', compact($client));
     }
 
     public function destroy(Client $client)
@@ -69,7 +71,7 @@ class ClientController extends Controller
       if( !$client->delete() ){
         $request->session()->flash('fail', 'Delete was failure!');
       }
-      
+
       $request->session()->flash('success', 'Delete was successful!');
       return redirect()->route('clients.index');
     }

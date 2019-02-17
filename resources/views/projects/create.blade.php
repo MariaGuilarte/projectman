@@ -7,7 +7,15 @@
     <div class="col-sm-3">
       <div class="form-group">
         <label for="client_id">Cliente</label>
-        <select name="client_id" id="client_id" class="form-control"></select>
+        @if( $clients->count() )
+        <select name="client_id" id="client_id" class="form-control">
+          @foreach( $clients as $cli )
+            <option name="client_id" value="{{ $cli->id }}">{{ $cli->name }}</option>
+          @endforeach
+        </select>
+        @else
+          <span class="d-block"><a href="#">Registrar un cliente</a></span>
+        @endif
       </div>
     </div>
 
@@ -19,18 +27,12 @@
 
       <label style="font-weight: 500;">Plataforma</label>
       <div class="form-group inline-checks-container">
+        @foreach( $platforms as $p )
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="1">
-          <label class="form-check-label" for="inlineCheckbox1">Web</label>
+          <input class="form-check-input" type="checkbox" id="platformCheckbox{{ $p->id }}" value="{{ $p->id }}">
+          <label class="form-check-label" for="inlineCheckbox1">{{ $p->title }}</label>
         </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="2">
-          <label class="form-check-label" for="inlineCheckbox2">Móvil</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="3">
-          <label class="form-check-label" for="inlineCheckbox3">API</label>
-        </div>
+        @endforeach
       </div>
 
       <div class="form-group">
