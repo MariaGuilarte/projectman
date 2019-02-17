@@ -22,3 +22,7 @@ Route::resources([
   'payment_methods'      => 'PaymentMethodController',
   'platforms'            => 'PlatformController'
 ]);
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
